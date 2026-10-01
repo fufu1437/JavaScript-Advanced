@@ -1,20 +1,26 @@
-const readline = require("readline")
-const rl = readline.createInterface({ input: process.stdin })
-
-// TODO: turn this into a generator that yields 1, 4, 9, 16, ... forever.
-// It must never return on its own -- the caller decides how many to take.
-function* squares() {
-	let i = 1
-	while(true) {
-		yield i * i
-		i++
+// TODO: give Animal a kind() method that returns "animal".
+class Animal {
+	kind() {
+		return "animal"
 	}
 }
 
-rl.on("line", (line) => {
-	const n = parseInt(line)
-	const gen = squares()
-	for(let i = 0; i < n; i++) console.log(gen.next().value)
-	rl.close()
-})
-rl.on("close", () => process.exit(0))
+// TODO: make Dog extend Animal and override kind() to return "dog".
+class Dog extends Animal {
+	kind() {
+		return "dog"
+	}
+}
+
+// TODO: make Puppy extend Dog. Do NOT give it a kind() of its own --
+// the whole point is that the lookup walks up to Dog.
+class Puppy extends Dog {
+}
+
+// Plumbing below is finished. It prints the resolved kind(), then walks
+// three links of the prototype chain and names the constructor at each one.
+const p = new Puppy()
+console.log(p.kind())
+console.log(p.__proto__.constructor.name)
+console.log(p.__proto__.__proto__.constructor.name)
+console.log(p.__proto__.__proto__.__proto__.constructor.name)
