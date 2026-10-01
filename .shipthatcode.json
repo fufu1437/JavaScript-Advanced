@@ -1,0 +1,42 @@
+{
+  "course": "javascript-advanced",
+  "language": "javascript",
+  "language_id": 63,
+  "entrypoint": "main.js",
+  "version": 1,
+  "content_hash": "056d973ff19f2211",
+  "lessons": [
+    {
+      "slug": "generators",
+      "tests_hash": "35d5bbf11750"
+    },
+    {
+      "slug": "prototype-chain",
+      "tests_hash": "c07502201262"
+    },
+    {
+      "slug": "proxy",
+      "tests_hash": "983e6726023d"
+    },
+    {
+      "slug": "weak-refs",
+      "tests_hash": "341c4436350a"
+    },
+    {
+      "slug": "event-loop",
+      "tests_hash": "714479a55adf"
+    },
+    {
+      "slug": "symbols",
+      "tests_hash": "7efca82f7979"
+    },
+    {
+      "slug": "bigint",
+      "tests_hash": "4139c1a2b78a"
+    },
+    {
+      "slug": "performance",
+      "tests_hash": "6733bd1235fb"
+    }
+  ]
+}
