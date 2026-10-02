@@ -1,34 +1,21 @@
 const readline = require("readline")
 const rl = readline.createInterface({ input: process.stdin })
-const lines = []
 
-class EvenRange {
-	constructor(start, end) {
-		this.start = start
-		this.end = end
+function factorial(n) {
+	// TODO: build the product with BigInt values only.
+	// The accumulator starts at 1n. The loop counter is a Number, so it has
+	// to be converted before it can multiply: BigInt(i), called as a plain
+	// function -- `new BigInt(i)` is a TypeError, BigInt is not a constructor.
+	let out = BigInt(1)
+	for(let i = 1; i <= n; i++) {
+		out *= BigInt(i)
 	}
-	*[Symbol.iterator]() {
-		let i = this.start
-		const end = this.end
-		for(let j = i; j < end; j++) {
-			if(j & 1) continue
-			else yield j
-		}
-
-	}
-	// TODO: add a [Symbol.iterator]() method.
-	// It returns an object with a next() that reports { value, done }.
-	// Skip the odd numbers, and stop BEFORE end -- the range is [start, end).
+	return out
 }
 
-// Plumbing below is finished: two lines in, then for...of over your range.
 rl.on("line", (line) => {
-	lines.push(line)
-	if(lines.length === 2) {
-		const start = parseInt(lines[0])
-		const end = parseInt(lines[1])
-		for(const n of new EvenRange(start, end)) console.log(n)
-		rl.close()
-	}
+	const n = parseInt(line)
+	console.log(factorial(n).toString())
+	rl.close()
 })
 rl.on("close", () => process.exit(0))
