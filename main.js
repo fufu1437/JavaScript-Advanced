@@ -1,21 +1,24 @@
 const readline = require("readline")
 const rl = readline.createInterface({ input: process.stdin })
+const lines = []
 
-function factorial(n) {
-	// TODO: build the product with BigInt values only.
-	// The accumulator starts at 1n. The loop counter is a Number, so it has
-	// to be converted before it can multiply: BigInt(i), called as a plain
-	// function -- `new BigInt(i)` is a TypeError, BigInt is not a constructor.
-	let out = BigInt(1)
-	for(let i = 1; i <= n; i++) {
-		out *= BigInt(i)
-	}
-	return out
+function Vec3(x, y, z) {
+	this.x = x
+	this.y = y
+	this.z = z
 }
 
+// Plumbing below is finished: five lines in, one Vec3 each, sum of the x's out.
 rl.on("line", (line) => {
-	const n = parseInt(line)
-	console.log(factorial(n).toString())
-	rl.close()
+	lines.push(line)
+	if(lines.length === 5) {
+		const vecs = lines.map(line => {
+			const [x, y, z] = line.split(' ').map(Number)
+			return new Vec3(x, y, z)
+		})
+		const total = vecs.reduce((s, v) => s + v.x, 0)
+		console.log(total)
+		rl.close()
+	}
 })
 rl.on("close", () => process.exit(0))
