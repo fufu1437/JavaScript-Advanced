@@ -1,26 +1,34 @@
-// TODO: give Animal a kind() method that returns "animal".
-class Animal {
-	kind() {
-		return "animal"
+const readline = require("readline")
+const rl = readline.createInterface({ input: process.stdin })
+const lines = []
+
+const obj = {}
+// TODO: replace this empty handler. The set trap must print the line
+// first, then store the value, then report success. The get trap just
+// hands back what is stored.
+const proxy = new Proxy(obj, {
+	get(obj, key) {
+		return obj[key]
+	},
+	set(obj, key, value) {
+		console.log(`set ${key}=${value}`)
+		obj[key] = value
+		return true
 	}
-}
+})
 
-// TODO: make Dog extend Animal and override kind() to return "dog".
-class Dog extends Animal {
-	kind() {
-		return "dog"
+// Plumbing below is finished: it feeds three key=value lines through the
+// proxy and then reads the last key back out through it.
+rl.on("line", (line) => {
+	lines.push(line)
+	if(lines.length === 3) {
+		for(const l of lines) {
+			const [k, v] = l.split('=')
+			proxy[k] = v
+		}
+		const lastKey = lines[2].split('=')[0]
+		console.log(proxy[lastKey])
+		rl.close()
 	}
-}
-
-// TODO: make Puppy extend Dog. Do NOT give it a kind() of its own --
-// the whole point is that the lookup walks up to Dog.
-class Puppy extends Dog {
-}
-
-// Plumbing below is finished. It prints the resolved kind(), then walks
-// three links of the prototype chain and names the constructor at each one.
-const p = new Puppy()
-console.log(p.kind())
-console.log(p.__proto__.constructor.name)
-console.log(p.__proto__.__proto__.constructor.name)
-console.log(p.__proto__.__proto__.__proto__.constructor.name)
+})
+rl.on("close", () => process.exit(0))
